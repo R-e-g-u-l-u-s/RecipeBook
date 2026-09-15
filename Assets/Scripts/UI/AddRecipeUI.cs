@@ -38,7 +38,6 @@ public class AddRecipeUI : MonoBehaviour
 
 
     [Header("Острота")]
-    [SerializeField] private Toggle spicinessToggle;
     [SerializeField] private GameObject spicinessLevelContainer;
     [SerializeField] private Button level1Button, level2Button, level3Button;
     [SerializeField] private Image pepperImage1, pepperImage2, pepperImage3;
@@ -73,8 +72,6 @@ public class AddRecipeUI : MonoBehaviour
         clickBlocker.onClick.AddListener(CloseDropdown);
         clickBlocker.gameObject.SetActive(false);
 
-        spicinessLevelContainer.SetActive(false);
-        spicinessToggle.onValueChanged.AddListener(OnSpicinessToggleChanged);
         level1Button.onClick.AddListener(() => OnSpicinessLevelClicked(1));
         level2Button.onClick.AddListener(() => OnSpicinessLevelClicked(2));
         level3Button.onClick.AddListener(() => OnSpicinessLevelClicked(3));
@@ -195,26 +192,23 @@ public class AddRecipeUI : MonoBehaviour
     }
 
     // ===== ОСТРОТА =====
-    private void OnSpicinessToggleChanged(bool isOn)
-    {
-        spicinessLevelContainer.SetActive(isOn);
-        if (isOn && selectedSpicinessLevel == 0) selectedSpicinessLevel = 1;
-        if (!isOn) selectedSpicinessLevel = 0;
-        UpdatePepperIcons();
-    }
 
     private void OnSpicinessLevelClicked(int level)
     {
-        selectedSpicinessLevel = (selectedSpicinessLevel == level) ? 1 : level;
+        if (selectedSpicinessLevel == level)
+        {
+            // Повторный клик по выбранному уровню — сбрасываем всё
+            selectedSpicinessLevel = 0;
+        }
+        else
+        {
+            selectedSpicinessLevel = level;
+        }
         UpdatePepperIcons();
     }
 
     private void UpdatePepperIcons()
     {
-        bool show = spicinessToggle.isOn;
-        pepperImage1.gameObject.SetActive(show);
-        pepperImage2.gameObject.SetActive(show);
-        pepperImage3.gameObject.SetActive(show);
         pepperImage1.sprite = selectedSpicinessLevel >= 1 ? pepperActiveSprite : pepperInactiveSprite;
         pepperImage2.sprite = selectedSpicinessLevel >= 2 ? pepperActiveSprite : pepperInactiveSprite;
         pepperImage3.sprite = selectedSpicinessLevel >= 3 ? pepperActiveSprite : pepperInactiveSprite;
@@ -336,11 +330,9 @@ public class AddRecipeUI : MonoBehaviour
             activeDays = ParseInt(activeDaysInput.text),
             activeHours = ParseInt(activeHoursInput.text),
             activeMinutes = ParseInt(activeMinutesInput.text),
-            //calories = ParseInt(caloriesInput.text),
             proteins = ParseFloat(proteinsInput.text),
             fats = ParseFloat(fatsInput.text),
             carbohydrates = ParseFloat(carbohydratesInput.text),
-            hasSpiciness = spicinessToggle.isOn,
             spicinessLevel = selectedSpicinessLevel,
             ingredients = new List<Ingredient>(ingredientsList)
         };
@@ -373,10 +365,8 @@ public class AddRecipeUI : MonoBehaviour
         totalDaysInput.text = totalHoursInput.text = totalMinutesInput.text = "";
         activeDaysInput.text = activeHoursInput.text = activeMinutesInput.text = "";
 
-        spicinessToggle.isOn = false;
         selectedSpicinessLevel = 0;
         UpdatePepperIcons();
-        spicinessLevelContainer.SetActive(false);
 
         ingredientsList.Clear();
         foreach (Transform child in ingredientsContainer) Destroy(child.gameObject);
