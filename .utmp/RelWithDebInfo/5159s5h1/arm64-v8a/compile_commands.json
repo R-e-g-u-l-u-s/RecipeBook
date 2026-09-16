@@ -1,0 +1,7 @@
+[
+{
+  "directory": "S:/Unity/Unity Proj/RecipeBook/.utmp/RelWithDebInfo/5159s5h1/arm64-v8a",
+  "command": "\"S:\\Unity\\Unity Hub\\6000.0.26f1\\Editor\\Data\\PlaybackEngines\\AndroidPlayer\\NDK\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang++.exe\" --target=aarch64-none-linux-android23 --sysroot=\"S:/Unity/Unity Hub/6000.0.26f1/Editor/Data/PlaybackEngines/AndroidPlayer/NDK/toolchains/llvm/prebuilt/windows-x86_64/sysroot\" -DEXTERNAL_FRAME_PACING_CODE -Dswappywrapper_EXPORTS -I\"S:/Unity/Unity Proj/RecipeBook/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/src/main/cpp/FramePacing\" -isystem C:/Users/khann_lbflxyz/.gradle/caches/transforms-3/268849a49ea9eb2bba6f4e0ac95bfd63/transformed/jetified-games-frame-pacing-1.10.0/prefab/modules/swappy_static/include -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fexceptions -frtti -stdlib=libc++ -Wall -Wextra -pedantic -Werror -O2 -g -DNDEBUG -fPIC -o FramePacing\\CMakeFiles\\swappywrapper.dir\\UnitySwappyWrapper.cpp.o -c \"S:\\Unity\\Unity Proj\\RecipeBook\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\src\\main\\cpp\\FramePacing\\UnitySwappyWrapper.cpp\"",
+  "file": "S:\\Unity\\Unity Proj\\RecipeBook\\Library\\Bee\\Android\\Prj\\IL2CPP\\Gradle\\unityLibrary\\src\\main\\cpp\\FramePacing\\UnitySwappyWrapper.cpp"
+}
+]

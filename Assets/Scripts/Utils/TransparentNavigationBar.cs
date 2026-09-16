@@ -5,6 +5,7 @@ public class TransparentNavigationBar : MonoBehaviour
     void Start()
     {
         InvokeRepeating(nameof(Apply), 0f, 0.5f);
+        Application.targetFrameRate = 60;
     }
 
     void OnApplicationFocus(bool hasFocus)
