@@ -4,6 +4,7 @@ public class ShowStatusBar : MonoBehaviour
 {
     void Start()
     {
+        Application.targetFrameRate = 60;
         InvokeRepeating(nameof(Apply), 0f, 0.5f);
     }
 

@@ -1,19 +1,39 @@
-using System.Collections.Generic;
+п»їusing System.Collections.Generic;
 
 public static class Units
 {
-    // Временный список (потом можно загружать из файла)
-    private static List<string> defaultUnits = new List<string>
+    // Р’СЂРµРјРµРЅРЅС‹Р№ СЃРїРёСЃРѕРє (РїРѕС‚РѕРј РјРѕР¶РЅРѕ Р·Р°РіСЂСѓР¶Р°С‚СЊ РёР· С„Р°Р№Р»Р°)
+    private static List<string> categoryUnits = new List<string>
     {
-        "г", "кг", "мл", "л", "шт", "ст.л.", "ч.л.", "стакан", "по вкусу"
+        "Рі", "РєРі", "РјР»", "Р»", "С€С‚", "СЃС‚.Р».", "С‡.Р».", "СЃС‚Р°РєР°РЅ", "РїРѕ РІРєСѓСЃСѓ"
     };
-    public static List<string> GetUnits()
+    private static List<string> weightUnits = new List<string>
     {
-        // Здесь в будущем можно читать из сохранений
-        return new List<string>(defaultUnits);
+        "Рі", "РєРі", "РјР»", "Р»"
+    };
+
+    public static List<string> GetUnits(UnitsType type)
+    {
+        // Р—РґРµСЃСЊ РІ Р±СѓРґСѓС‰РµРј РјРѕР¶РЅРѕ С‡РёС‚Р°С‚СЊ РёР· СЃРѕС…СЂР°РЅРµРЅРёР№
+
+        switch (type)
+        {
+            case UnitsType.Category:
+                return new List<string>(categoryUnits);
+                break;
+            case UnitsType.Weight:
+                return new List<string>(weightUnits);
+                break;
+            default:
+                break;
+        }
+
+        return new List<string>(categoryUnits);
     }
-    public static List<string> GetWeightUnits()
+
+    public enum UnitsType
     {
-        return new List<string> { "г", "кг", "мл", "л"};
+        Category,
+        Weight
     }
 }

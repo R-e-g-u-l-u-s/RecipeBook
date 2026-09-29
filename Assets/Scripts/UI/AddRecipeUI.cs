@@ -8,7 +8,7 @@ public class AddRecipeUI : MonoBehaviour
 {
     [Header("Основные поля")]
     [SerializeField] private InputField nameInput;
-    [SerializeField] private InputField descriptionInput;
+    [SerializeField] private TMP_InputField descriptionInput;
     [SerializeField] private Button photoButton;
     [SerializeField] private Image photoPreview;
 
@@ -50,7 +50,8 @@ public class AddRecipeUI : MonoBehaviour
     [SerializeField] private Image proteinsSegment;
     [SerializeField] private Image fatsSegment;
     [SerializeField] private Image carbohydratesSegment;
-    [SerializeField] private TMP_Text caloriesCenterText; // центральный текст
+    [SerializeField] private TMP_Text caloriesCenterText;
+    [SerializeField] private Button weightUnitButton; 
 
     [Header("Кнопки")]
     [SerializeField] private Button saveButton;
@@ -60,8 +61,8 @@ public class AddRecipeUI : MonoBehaviour
     private List<Toggle> categoryToggles = new List<Toggle>();
     private List<Ingredient> ingredientsList = new List<Ingredient>();
 
-    private Color selectedColor = new Color(0.3f, 0.8f, 0.3f, 1f);
-    private Color unselectedColor = Color.white;
+    private Color selectedColor = new Color32(0xD5, 0xFF, 0xD6, 0xFF); // Зеленый
+    private Color unselectedColor = new Color(0f, 0f, 0f, 0f); // Прозрачный
     private int selectedSpicinessLevel = 0;
 
     private void Start()
@@ -78,11 +79,13 @@ public class AddRecipeUI : MonoBehaviour
 
         photoButton.onClick.AddListener(OnPhotoButtonClicked);
 
-        List<string> units = Units.GetUnits();
+        List<string> categoryUnits = Units.GetUnits(Units.UnitsType.Category);
         ingredientUnitDropdown.ClearOptions();
-        ingredientUnitDropdown.AddOptions(units);
+        ingredientUnitDropdown.AddOptions(categoryUnits);
         ingredientUnitDropdown.value = -1;
+        List<string> weightUnits = Units.GetUnits(Units.UnitsType.Weight);
 
+        weightUnitButton.onClick.AddListener(delegate { OnWeightUnitChanged(weightUnits); });
         proteinsInput.onValueChanged.AddListener(delegate { UpdateNutritionChart(); });
         fatsInput.onValueChanged.AddListener(delegate { UpdateNutritionChart(); });
         carbohydratesInput.onValueChanged.AddListener(delegate { UpdateNutritionChart(); });
@@ -314,6 +317,14 @@ public class AddRecipeUI : MonoBehaviour
         UpdateNutritionChart();
     }
 
+
+    private int unitIndex = 0;
+    private void OnWeightUnitChanged(List<string> list)
+    {
+        unitIndex = (unitIndex + 1) % list.Count; 
+        weightUnitButton.GetComponentInChildren<TextMeshProUGUI>().text = list[unitIndex];
+    }
+
     // ===== СОХРАНЕНИЕ =====
     private void SaveRecipe()
     {
@@ -371,8 +382,11 @@ public class AddRecipeUI : MonoBehaviour
         ingredientsList.Clear();
         foreach (Transform child in ingredientsContainer) Destroy(child.gameObject);
         ingredientUnitDropdown.value = -1;
-
         caloriesCenterText.text = "";
+
+        weightUnitButton.GetComponentInChildren<TextMeshProUGUI>().text = "г";
+        unitIndex = 0;
+
         UpdateNutritionChart();
     }
 }
